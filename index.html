@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Michele - Nowoczesna Pizzeria & Restauracja Rodzinna</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome dla Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Arkusz stylów CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Nagłówek / Logo -->
+    <header class="brand-header">
+        <div class="brand-logo-container">
+            <img src="logo.jpg" alt="San Michele Logo" class="main-logo-img">
+        </div>
+    </header>
+
+    <!-- Nawigacja -->
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="#menu" class="active">Menu Cyfrowe</a></li>
+                <li><a href="#galeria">Galeria</a></li>
+                <li><a href="#sklep">Sklep Włoski</a></li>
+                <li><a href="#catering">Catering</a></li>
+                <li><a href="#kontakt">Kontakt</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="cart-btn" onclick="scrollToCart()">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <span>Koszyk</span>
+                    <div class="cart-count" id="cartCount">0</div>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sekcja Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Prawdziwy Smak Włoch</h1>
+            <p>Klasyczne receptury kuchni włoskiej, starannie dobrane importowane składniki i rodzinna atmosfera. Zamów online z odbiorem osobistym.</p>
+            <button class="cta-btn" onclick="document.getElementById('menu').scrollIntoView()">Zobacz Menu</button>
+        </div>
+    </section>
+
+    <!-- Główny Kontener -->
+    <div class="main-container">
+        
+        <!-- Lewa Kolumna: Menu -->
+        <section id="menu">
+            <div class="menu-controls">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Wyszukaj danie lub składnik (np. salami, mozzarella)..." oninput="filterMenu()">
+                </div>
+                <div class="filter-tabs">
+                    <button class="filter-btn active" onclick="setCategory('all', this)">Wszystko</button>
+                    <button class="filter-btn" onclick="setCategory('klasyka', this)">Pizza Klasyka</button>
+                    <button class="filter-btn" onclick="setCategory('bestsellery', this)">Pizza Bestsellery</button>
+                    <button class="filter-btn" onclick="setCategory('premium', this)">Pizza Premium</button>
+                    <button class="filter-btn" onclick="setCategory('salatki', this)">Sałatki</button>
+                    <button class="filter-btn" onclick="setCategory('antipasti', this)">Antipasti</button>
+                    <button class="filter-btn" onclick="setCategory('pasta', this)">Pasta & Lasagna</button>
+                    <button class="filter-btn" onclick="setCategory('desery', this)">Desery</button>
+                </div>
+                <div class="tag-filters">
+                    <button class="tag-btn" data-tag="vege" onclick="toggleTagFilter('vege')">
+                        <i class="fa-solid fa-leaf"></i> Wegetariańskie
+                    </button>
+                    <button class="tag-btn" data-tag="ostre" onclick="toggleTagFilter('ostre')">
+                        <i class="fa-solid fa-pepper-hot"></i> Ostre
+                    </button>
+                    <button class="tag-btn" data-tag="top" onclick="toggleTagFilter('top')">
+                        <i class="fa-solid fa-star"></i> TOP (Najczęściej wybierane)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Obszar generowania dań -->
+            <div id="menuRenderArea"></div>
+        </section>
+
+        <!-- Prawa Kolumna: Koszyk boczny -->
+        <aside class="cart-sidebar" id="cartSidebar">
+            <div class="cart-title">
+                <span>Twoje Zamówienie</span>
+                <i class="fa-solid fa-bag-shopping"></i>
+            </div>
+            <div class="cart-items-container" id="cartItems">
+                <p style="color: var(--text-muted); text-align: center; font-size: 13px; margin-top: 30px;">Twój koszyk jest pusty</p>
+            </div>
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Opakowania</span>
+                    <span id="packagingPrice">0.00 zł</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Suma:</span>
+                    <span id="totalPrice">0.00 zł</span>
+                </div>
+                <button class="checkout-btn" onclick="handleCallOrder()">
+                    <i class="fa-solid fa-phone" style="margin-right: 8px;"></i> Zadzwoń i zamów
+                </button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Sekcja: Galeria Zdjęć -->
+    <section class="gallery-section" id="galeria">
+        <div class="gallery-header">
+            <h2>Nasze Specjały & Wnętrze</h2>
+            <p>Zobacz jak powstają nasze potrawy i poczuj klimat San Michele</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="zdj1.jpg" alt="Zdjęcie pizzerii 1"></div>
+            <div class="gallery-item"><img src="zdj2.jpg" alt="Zdjęcie pizzerii 2"></div>
+            <div class="gallery-item"><img src="zdj3.jpg" alt="Zdjęcie pizzerii 3"></div>
+            <div class="gallery-item"><img src="zdj4.jpg" alt="Zdjęcie pizzerii 4"></div>
+            <div class="gallery-item"><img src="zdj5.jpg" alt="Zdjęcie pizzerii 5"></div>
+            <div class="gallery-item"><img src="zdj6.jpg" alt="Zdjęcie pizzerii 6"></div>
+            <div class="gallery-item"><img src="zdj7.jpg" alt="Zdjęcie pizzerii 7"></div>
+            <div class="gallery-item"><img src="zdj8.jpg" alt="Zdjęcie pizzerii 8"></div>
+            <div class="gallery-item"><img src="zdj9.jpg" alt="Zdjęcie pizzerii 9"></div>
+            <div class="gallery-item"><img src="zdj10.jpg" alt="Zdjęcie pizzerii 10"></div>
+            <div class="gallery-item"><img src="zdj11.jpg" alt="Zdjęcie pizzerii 11"></div>
+            <div class="gallery-item"><img src="zdj12.jpg" alt="Zdjęcie pizzerii 12"></div>
+        </div>
+    </section>
+
+    <!-- Dodatkowe bloki informacyjne -->
+    <section class="info-blocks">
+        <div class="info-blocks-container">
+            <div class="info-card shop" id="sklep">
+                <i class="fa-solid fa-store"></i>
+                <h3>Sklep Włoski</h3>
+                <p>Produkty sprowadzane prosto z Włoch. Kupisz u nas oryginalne składniki, z których tworzymy nasze menu, idealne do Twojej domowej kuchni.</p>
+                <ul>
+                    <li>Kawy</li>
+                    <li>Oliwy</li>
+                    <li>Sery</li>
+                    <li>Passaty</li>
+                    <li>Wędliny</li>
+                    <li>Pasty</li>
+                    <li>Wina & Piwa</li>
+                    <li>Słodycze</li>
+                </ul>
+            </div>
+            <div class="info-card catering" id="catering">
+                <i class="fa-solid fa-utensils"></i>
+                <h3>Catering | Przyjęcia</h3>
+                <p>Organizujemy wyjątkowe spotkania w gronie rodziny i przyjaciół, spotkania biznesowe oraz imprezy okolicznościowe (urodziny, imieniny). Oferta ustalana indywidualnie.</p>
+                <ul>
+                    <li>Deski włoskich serów</li>
+                    <li>Deski wędlin</li>
+                    <li>Imprezy okolicznościowe</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Wyboru Rozmiaru Pizzy -->
+    <div class="modal" id="sizeModal">
+        <div class="modal-content">
+            <h3 id="modalItemTitle">Wybierz rozmiar pizzy</h3>
+            <div class="size-options" id="modalSizeOptions"></div>
+            <div class="modal-actions">
+                <button class="modal-btn cancel" onclick="closeModal()">Anuluj</button>
+                <button class="modal-btn confirm" onclick="confirmAddToCart()">Dodaj do koszyka</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Podsumowanie zamówienia telefonicznego -->
+    <div class="modal" id="phoneOrderModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 10px; border-bottom: 2px solid #f5f5f5; padding-bottom: 10px;">
+                <i class="fa-solid fa-phone" style="color: var(--accent-green); margin-right: 8px;"></i> Złóż zamówienie
+            </h3>
+            
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">
+                Zadzwoń do lokalu i podyktuj przygotowane poniżej zamówienie:
+            </p>
+
+            <div style="background: #f9f9f9; border: 1px dashed #ccc; padding: 15px; text-align: center; border-radius: 8px; margin-bottom: 20px;">
+                <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); display: block; margin-bottom: 4px;">Numer do Pizzerii</span>
+                <a href="tel:+48506151535" id="modalPhoneLink" style="font-size: 24px; font-weight: 700; color: var(--accent-red); text-decoration: none; letter-spacing: 1px;">+48 506 151 535</a>
+            </div>
+
+            <div id="modalOrderList" style="max-height: 200px; overflow-y: auto; background: #fff; border: 1px solid #eee; padding: 12px; border-radius: 6px; font-size: 13px; margin-bottom: 20px; line-height: 1.6;">
+                <!-- Tutaj skrypt JS wstawi listę potraw -->
+            </div>
+
+            <div class="modal-actions">
+                <button class="modal-btn cancel" onclick="closePhoneOrderModal()">Zamknij</button>
+                <a href="tel:+48506151535" id="modalCallTarget" class="modal-btn confirm" style="text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <i class="fa-solid fa-phone"></i> Zadzwoń teraz
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stopka strony / Kontakt i Mapa -->
+    <footer id="kontakt">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>San Michele</h4>
+                <p>Rodzinna restauracja i pizzeria stawiająca na autentyczną jakość i tradycję włoskiego rzemiosła kulinarnego.</p>
+                <p style="margin-top: 15px;"><i class="fa-solid fa-phone" style="color: var(--accent-gold); margin-right: 5px;"></i> Telefon: <strong>+48 506 151 535</strong></p>
+                <a href="https://www.facebook.com/san.michele.ogrodny" target="_blank" class="fb-link">
+                    <i class="fa-brands fa-facebook-f"></i> Nasz Facebook
+                </a>
+            </div>
+            <div class="footer-col">
+                <h4>Informacje i Cennik</h4>
+                <p><strong>Sosy do pizzy (2.00 zł):</strong> czosnkowy, pomidorowy, majonezowy, ketchup</p>
+                <p>Dopłata do dań na wynos: 3.00 zł</p>
+                <p>Opakowanie pizzowe: 2.00 zł</p>
+            </div>
+            <div class="footer-col">
+                <h4>Nasza Lokalizacja</h4>
+                <div class="map-wrapper">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5147.284738978784!2d19.937978186665152!3d49.830386504558795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47166f4635c54371%3A0x80d76c3c55e59156!2sSan%20Michele!5e0!3m2!1spl!2spl!4v1779818549621!5m2!1spl!2spl" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 San Michele Family Restaurant. Wszystkie prawa zastrzeżone.
+        </div>
+    </footer>
+
+    <!-- Logika działania JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
